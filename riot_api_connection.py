@@ -1,7 +1,8 @@
-import requests
-import riot_consts as consts
-import riot_api_key as riot_api_key
 import pandas as pd
+import requests
+
+import riot_api_key as riot_api_key
+import riot_consts as consts
 
 ddragon_version = requests.get('https://ddragon.leagueoflegends.com/api/versions.json').json()[0]
 ddragon_items = requests.get(
@@ -50,7 +51,6 @@ class riot_api(object):
         )
 
         return self._request(api_url)
-
 
     # MATCH ENDPOINT
     def get_matches_by_summoner_name(self, name):
@@ -119,6 +119,7 @@ class riot_api(object):
             encryptedSummonerId=summoner_id)
         return self._request(api_url)
 
+
 # TO DATAFRAME
 def game_to_df(game):
     columns = pd.DataFrame.from_dict(game['info']['participants'][0]).set_index('participantId').columns
@@ -156,4 +157,3 @@ def performance_metrics(game):
     kda = df[['championName', 'kda']].sort_values('kda', ascending=False)
 
     return kills, assists, deaths, skills, damage_magic, damage_physical, damage_true, damage_taken
-
